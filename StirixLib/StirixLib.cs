@@ -13,10 +13,11 @@ namespace StirixLib
 
     public class StirixListener
     {
-        public HttpListener stirixListner  { get; set; }
+        public HttpListener stirixListener  { get; set; }
 
         public void startListner(){
-        HttpListener stirixListener = stirixSingleton.Instance;
+        stirixListener = stirixSingleton.Instance;
+        stirixListener.Prefixes.Add("http://*:9090/");
         stirixListener.Start();
         IAsyncResult result = stirixListener.BeginGetContext(new AsyncCallback(getData), stirixListener);
         Console.WriteLine("Waiting for request to be processed asyncronously.");
