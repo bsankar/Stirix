@@ -19,9 +19,19 @@ namespace StirixLib
         stirixListener = stirixSingleton.Instance;
         stirixListener.Prefixes.Add("http://*:9090/");
         stirixListener.Start();
-        IAsyncResult result = stirixListener.BeginGetContext(new AsyncCallback(getData), stirixListener);
+            IAsyncResult result;
+            Boolean error=false;
+       while(!error){
+           try{
+         result = stirixListener.BeginGetContext(new AsyncCallback(getData), stirixListener);
         Console.WriteLine("Waiting for request to be processed asyncronously.");
-        result.AsyncWaitHandle.WaitOne();
+           }
+            catch(Exception e)
+           {
+                error=true;
+            }
+        }
+       // result.AsyncWaitHandle.WaitOne();
         Console.WriteLine("Request processed asyncronously.");
         stirixListener.Close();
 
